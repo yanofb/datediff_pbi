@@ -1,0 +1,17 @@
+##--tratamento na tabela acessos
+qtd_dias_para_acesso = DATEDIFF( Acessos[data_convite],  Acessos[data_acesso], day) -- calcula a diferença entre a data de acesso e a data de convite
+
+agrupamento_dias_convite_acesso = IF(Acessos[qtd_dias_para_acesso] = 0, " Mesmo dia",
+IF(Acessos[qtd_dias_para_acesso] >=1 && Acessos[qtd_dias_para_acesso]  <=5, "  1 a 5 dias",
+IF(Acessos[qtd_dias_para_acesso] >=6 && Acessos[qtd_dias_para_acesso]  <=10, "   6 a 10 dias", "    Mais de 10 dias"))) -- realiza agrupamentos para contabilizar clientes que acessaram no mesmo dia que recebem o convite, entre 1 e 5 dias ou entre 6 e 10 dias
+
+##  --tratamento na tabela transacoes
+data_acesso = LOOKUPVALUE(Acessos[data_acesso], Acessos[id_cliente], Transacoes[id_cliente])
+
+dias_entre_acesso_venda = DATEDIFF(Transacoes[data_acesso], Transacoes[data_venda], day)
+
+agrupamento_dias_acesso_venda = IF(Transacoes[dias_entre_acesso_venda] = 0, " Mesmo dia",
+IF(Transacoes[dias_entre_acesso_venda] >=1 && Transacoes[dias_entre_acesso_venda]  <=5, "  1 a 5 dias",
+IF(Transacoes[dias_entre_acesso_venda] >=6 && Transacoes[dias_entre_acesso_venda]  <=10, "   6 a 10 dias", "    Mais de 10 dias")))
+
+  
